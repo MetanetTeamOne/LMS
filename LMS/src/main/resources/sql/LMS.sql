@@ -60,7 +60,7 @@ CREATE TABLE LECTURE (
 	lecture_time VARCHAR2(20),
 	lecture_credit NUMBER,
 	lecture_date VARCHAR2(20),
-	grade VARCHAR2(20),
+	student_grade VARCHAR2(20),
 	professor_id NUMBER,
 	major_id NUMBER
 );
