@@ -9,7 +9,7 @@ import com.metanetglobal.LMS.student.model.StudentVO;
 import com.metanetglobal.LMS.student.repository.StudentRepository;
 
 @Service
-public class StudentService {
+public class StudentService implements IStudentService {
 	@Autowired
 	StudentRepository studentRepository;
 	

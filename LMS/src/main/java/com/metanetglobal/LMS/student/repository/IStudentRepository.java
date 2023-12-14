@@ -9,7 +9,7 @@ import com.metanetglobal.LMS.student.model.StudentVO;
 
 @Repository
 @Mapper
-public interface StudentRepository {
+public interface IStudentRepository {
 
 	List<StudentVO> findAllStudents();
 	StudentVO findStudentById(int studentId);
