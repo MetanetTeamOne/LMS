@@ -3,51 +3,54 @@ package com.metanetglobal.LMS.student.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentVO;
-import com.metanetglobal.LMS.student.service.StudentService;
+import com.metanetglobal.LMS.student.service.IStudentService;
 
-@Controller
+@RestController
+@RequestMapping("/student")
 public class StudentContorller {
 	@Autowired
-	StudentService studentService;
+	IStudentService studentService;
 
-	@GetMapping("/student/list")
-	public String findAllStudent(Model model){
+	@GetMapping("/list")
+	public List<StudentVO> findAllStudent(){
 		List<StudentVO> list = studentService.findAllStudents();
-		model.addAttribute("list", list);
-		return "/student/list";
+		return list;
 	}
 	
-	@GetMapping("/student/list/{studentId}")
-	public String findStudentById(@PathVariable("studentId") int studentId, Model model) {
+	@GetMapping("/list/{studentId}")
+	public StudentVO findStudentById(@PathVariable("studentId") int studentId) {
 		StudentVO student = studentService.findStudentById(studentId);
-		model.addAttribute("student", student);
-		return "/student/info";
+		return student;
 	}
 	
-	@GetMapping("/student/insert")
+	@GetMapping("/signin")
 	public String insertForm() {
-		return  "/student/insert";
+		return  "ok";
 	}
 	
-	@PostMapping("/student/insert")
-	public String insertStudent(StudentVO student) {
+	@PostMapping("/signin")
+	public StudentVO insertStudent(@RequestBody StudentVO student) {
 		studentService.insertStudent(student);
-		return "/student/list";
+		return student;
 	}
 	
-	@GetMapping("/student/update/{studentId}")
-	public String updateForm(@PathVariable("studentId") int studentId, Model model) {
+	@GetMapping("/mypage/update")
+	public StudentVO updateForm(@PathVariable("studentId") int studentId) {
 		StudentVO student = studentService.findStudentById(studentId);
-		model.addAttribute("student",student);
-		return "/stuent/update";
-		
+		return student;
+	}
+	
+	@PostMapping("/mypage/update")
+	public StudentVO updateStudent(@RequestBody StudentVO student){
+		studentService.updateStudent(student);
+		return student;
 	}
 }

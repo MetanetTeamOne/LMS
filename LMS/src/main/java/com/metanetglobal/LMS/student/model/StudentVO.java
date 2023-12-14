@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class StudentVO {
 	private int studentId;
-	private String studentName;
-	private String studentEmail;
-	private String studentAddress;
-	private String studentPhoneNumber;
-	private String studentGrade;
-	private String studentAdmissionYear;
+	private String name;
+	private String email;
+	private String address;
+	private String phoneNumber;
+	private String grade;
+	private String admissionYear;
 	private int majorId;
 }
