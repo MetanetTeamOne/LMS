@@ -1,5 +1,8 @@
 package com.metanetglobal.LMS.student.model;
 
-public class StudentVOUserDetailsService {
+import org.springframework.stereotype.Component;
 
+@Component
+public class StudentVOUserDetailsService {
+	
 }
