@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.metanetglobal.LMS.comments.repository.ICommentsRepository">
 	<select id="getLectureIdComments" parameterType="int" resultType="com.metanetglobal.LMS.comments.model.Comments">
-		SELECT  comments_id AS commentsId,
-			comments_content AS commentsContent,
-			lecture_comment_id AS lectureCommentId,
-			student_id AS studentId,
-			comment_write_date AS commentWriteDate
-		FROM COMMENTS
-		WHERE lecture_comment_id = #{lectureCommentId}
+	    SELECT comments_id AS commentsId,
+	        comments_content AS commentsContent,
+	        lecture_comment_id AS lectureCommentId,
+	        student_id AS studentId,
+	        comment_write_date AS commentWriteDate
+	    FROM COMMENTS
+	    WHERE lecture_comment_id = #{lectureCommentId}
 	</select>
 	<select id="getComments" parameterType="int" resultType="com.metanetglobal.LMS.comments.model.Comments">
-		SELECT  comments_id AS commentsId,
+		SELECT comments_id AS commentsId,
 			comments_content AS commentsContent,
 			lecture_comment_id AS lectureCommentId,
 			student_id AS studentId,
@@ -20,14 +20,15 @@
 		WHERE comments_id = #{commentsId}
 	</select>
 	<insert id="insertComments" parameterType="com.metanetglobal.LMS.comments.model.Comments">
-		<selectkey resultType="int" keyProperty="commentsId" ordesr="BEFORE">
-			SELECT NVL(MAX(comments_id),0)+1 AS commentsId FROM COMMENTS
-		</selectkey>
-		INSERT INTO COMMENTS 
-			(comments_id, comments_content, lecture_comment_id, student_id, comment_write_date)
-		VALUES 
-			(#{commentsId}, #{commentsContent}, #{lectureCommentId}, #{studentId}, SYSDATE)
+	    <selectKey resultType="int" keyProperty="commentsId" order="BEFORE">
+	        SELECT NVL(MAX(comments_id), 0) + 1 AS commentsId FROM COMMENTS
+	    </selectKey>
+	    INSERT INTO COMMENTS 
+	        (comments_id, comments_content, lecture_comment_id, student_id, comment_write_date)
+	    VALUES 
+	        (#{commentsId}, #{commentsContent}, #{lectureCommentId}, #{studentId}, SYSDATE)
 	</insert>
+
 	<update id="updateComments" parameterType="com.metanetglobal.LMS.comments.model.Comments">
 		UPDATE COMMENTS 
 		<set>

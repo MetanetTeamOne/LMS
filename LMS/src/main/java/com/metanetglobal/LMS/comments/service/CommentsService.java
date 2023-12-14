@@ -6,36 +6,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.metanetglobal.LMS.comments.model.Comments;
+import com.metanetglobal.LMS.comments.repository.ICommentsRepository;
 
 @Service
 public class CommentsService implements ICommentsService {
 	
 	@Autowired
-	ICommentsService commentService;
+	ICommentsRepository commentsRepository;
 
 	@Override
 	public List<Comments> getLectureIdComments(int lectureCommentId) {
-		return commentService.getLectureIdComments(lectureCommentId);
+		return commentsRepository.getLectureIdComments(lectureCommentId);
 	}
 
 	@Override
 	public Comments getComments(int commentsId) {
-		return commentService.getComments(commentsId);
+		return commentsRepository.getComments(commentsId);
 	}
 
 	@Override
 	public void insertComments(Comments comments) {
-		commentService.insertComments(comments);
+		commentsRepository.insertComments(comments);
 	}
 
 	@Override
 	public void updateComments(Comments comments) {
-		commentService.updateComments(comments);
+		commentsRepository.updateComments(comments);
 	}
 
 	@Override
 	public void deleteComments(int commentsId, int studentId) {
-		commentService.deleteComments(commentsId, studentId);
+		commentsRepository.deleteComments(commentsId, studentId);
 	}
 	
 }
