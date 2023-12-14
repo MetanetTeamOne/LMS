@@ -27,6 +27,9 @@
 		WHERE lecture_comment_id = #{lectureCommentId}
 	</select>
 	<insert id="insertLectureComment" parameterType="com.metanetglobal.LMS.lecturecomment.model.LectureComment">
+		<selectkey resultType="int" keyProperty="lectureCommentId" ordesr="BEFORE">
+			SELECT NVL(MAX(lecture_comment_id),0)+1 AS lectureCommentId FROM LECTURECOMMENT
+		</selectkey>
 		INSERT INTO LECTURECOMMENT 
 			(lecture_comment_id, lecture_comment_content, lecture_comment_star_score, course_id, lecture_id, student_id, lecture_comment_write_date)
 		VALUES 
