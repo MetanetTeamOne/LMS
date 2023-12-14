@@ -2,8 +2,12 @@ package com.metanetglobal.LMS.student.controller;
 
 import java.util.List;
 
+import org.mybatis.logging.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,44 +17,36 @@ import org.springframework.web.bind.annotation.RestController;
 import com.metanetglobal.LMS.student.model.StudentVO;
 import com.metanetglobal.LMS.student.service.IStudentService;
 
+
+
+
 @RestController
-@RequestMapping("/student")
 public class StudentContorller {
 	@Autowired
-	IStudentService studentService;
-
-	@GetMapping("/list")
-	public List<StudentVO> findAllStudent(){
-		List<StudentVO> list = studentService.findAllStudents();
-		return list;
-	}
+	IStudentService studentService;	
 	
-	@GetMapping("/list/{studentId}")
-	public StudentVO findStudentById(@PathVariable("studentId") int studentId) {
+	@GetMapping("/mypage")
+	public StudentVO findStudentById(@RequestBody int studentId) {
 		StudentVO student = studentService.findStudentById(studentId);
 		return student;
-	}
-	
-	@GetMapping("/signin")
-	public String insertForm() {
-		return  "ok";
 	}
 	
 	@PostMapping("/signin")
-	public StudentVO insertStudent(@RequestBody StudentVO student) {
+	public String insertStudent(@RequestBody StudentVO student) {
 		studentService.insertStudent(student);
-		return student;
+		return "ok";
 	}
 	
-	@GetMapping("/mypage/update")
-	public StudentVO updateForm(@PathVariable("studentId") int studentId) {
-		StudentVO student = studentService.findStudentById(studentId);
-		return student;
-	}
 	
-	@PostMapping("/mypage/update")
-	public StudentVO updateStudent(@RequestBody StudentVO student){
+	@PatchMapping("/mypage/update")
+	public String updateStudent(@RequestBody StudentVO student){
 		studentService.updateStudent(student);
-		return student;
+		return "ok";
+	}
+	
+	@DeleteMapping("/mypage/delete")
+	public String deleteStudent(@RequestBody String email) {
+		studentService.deleteStudent(email);
+		return "ok";
 	}
 }
