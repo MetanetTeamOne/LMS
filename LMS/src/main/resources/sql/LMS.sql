@@ -131,9 +131,11 @@ ALTER TABLE LECTURECOMMENT
 		);
 
 CREATE TABLE COMMENTS (
-	comments_id NUMBER NOT NULL,
-	comments_content VARCHAR2(100),
-	lecture_comment_id NUMBER
+    comments_id NUMBER NOT NULL,
+    comments_content VARCHAR2(100),
+    lecture_comment_id NUMBER,
+    student_id NUMBER,
+    comment_write_date DATE
 );
 
 ALTER TABLE COMMENTS
@@ -243,4 +245,14 @@ ALTER TABLE COMMENTS
 		)
 		REFERENCES LECTURECOMMENT (
 			lecture_comment_id
+		);
+
+ALTER TABLE COMMENTS
+	ADD
+		CONSTRAINT FK_STUDENT_TO_COMMENTS
+		FOREIGN KEY (
+			student_id
+		)
+		REFERENCES STUDENT (
+			student_id
 		);

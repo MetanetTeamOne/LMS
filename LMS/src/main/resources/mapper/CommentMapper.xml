@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.metanetglobal.LMS.comments.repository.ICommentsRepository">
+	<select id="getLectureIdComments" parameterType="int" resultType="com.metanetglobal.LMS.comments.model.Comments">
+		SELECT  comments_id AS commentsId,
+			comments_content AS commentsContent,
+			lecture_comment_id AS lectureCommentId,
+			student_id AS studentId,
+			comment_write_date AS commentWriteDate
+		FROM COMMENTS
+		WHERE lecture_comment_id = #{lectureCommentId}
+	</select>
+	<select id="getComments" parameterType="int" resultType="com.metanetglobal.LMS.comments.model.Comments">
+		SELECT  comments_id AS commentsId,
+			comments_content AS commentsContent,
+			lecture_comment_id AS lectureCommentId,
+			student_id AS studentId,
+			comment_write_date AS commentWriteDate
+		FROM COMMENTS
+		WHERE comments_id = #{commentsId}
+	</select>
+	<insert id="insertComments" parameterType="com.metanetglobal.LMS.comments.model.Comments">
+		INSERT INTO COMMENTS 
+			(comments_id, comments_content, lecture_comment_id, student_id, comment_write_date)
+		VALUES 
+			(#{commentsId}, #{commentsContent}, #{lectureCommentId}, #{studentId}, SYSDATE)
+	</insert>
+	<update id="updateComments" parameterType="com.metanetglobal.LMS.comments.model.Comments">
+		UPDATE COMMENTS 
+		<set>
+			<if	test="commentsContent != null">comments_content	= #{commentsContent},</if>
+			comment_write_date = SYSDATE
+		</set>
+		WHERE comments_id=#{commentsId}
+	</update>
+	<delete id="deleteComments" parameterType="int">
+		DELETE FROM COMMENTS 
+		WHERE comments_id = #{commentsId} and student_id = #{studentId}
+	</delete>
+</mapper>
