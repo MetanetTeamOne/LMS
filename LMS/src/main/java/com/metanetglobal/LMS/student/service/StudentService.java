@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.metanetglobal.LMS.student.model.StudentVO;
-import com.metanetglobal.LMS.student.repository.StudentRepository;
+import com.metanetglobal.LMS.student.repository.IStudentRepository;
 
 @Service
 public class StudentService implements IStudentService {
 	@Autowired
-	StudentRepository studentRepository;
+	IStudentRepository studentRepository;
 	
 	public List<StudentVO> findAllStudents(){
 		return studentRepository.findAllStudents();

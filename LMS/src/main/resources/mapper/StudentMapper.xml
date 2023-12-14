@@ -14,21 +14,22 @@
 </select>
 
 <insert id="insertStudent">
-	insert into student values(#{student.studentId}, #{}student.studentName},#{student.studentEmali},#{student.studentAddress}, #{student.studentPhoneNumber}, #{student.studentGrade}, #{student.studentAdmissionYear}, #{student.MajorId})
+	insert into student values(#{student.studentId}, #{}student.name},#{student.email},#{student.address}, #{student.phoneNumber}, #{student.grade}, #{student.admissionYear}, #{student.majorId})
 </insert>
 
 <update id="updateStudent">
 	update student
-	set student_Name = #{student.studentName},
-	student_email = #{student.studentEmail},
-	student_address = #{student.studentAddress},
-	student_phone_number = #{student.studentPhoneNumber},
-	student_grade = #{student.studentGrade},
+	set student_Name = #{student.name},
+	student_email = #{student.email},
+	student_address = #{student.address},
+	student_phone_number = #{student.phoneNumber},
+	grade, student_admission_year = #{student.admissionYear}
+	student_grade = #{student.grade},
 	major_id = #{student.majorId}
 </update>
 
 <delete>
 	delete from student 
-	where student_id = #{studentId} and student_email = #{studentEmail}
+	where student_id = #{studentId} and student_email = #{email}
 </delete>
 </mapper>
