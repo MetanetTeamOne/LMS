@@ -28,7 +28,7 @@ public class CourseController {
 	} 
 	
 	@GetMapping("/{studentId}")
-	public List<Course> getCourseList(@PathVariable int studentId){
+	public List<Course> getCourseList(@PathVariable String studentId){
 		System.out.println(studentId);
 		
 		List<Course> courseList = courseService.getCourseList(studentId);
@@ -53,7 +53,7 @@ public class CourseController {
 
 	
 	@DeleteMapping("/delete/{studentId}/{courseId}")
-	public int deleteCourse(@PathVariable int studentId, @PathVariable int courseId) {
+	public int deleteCourse(@PathVariable String studentId, @PathVariable int courseId) {
 		System.out.println("=======delete controller=======");
 		return courseService.deleteCourse(studentId, courseId);
 	}

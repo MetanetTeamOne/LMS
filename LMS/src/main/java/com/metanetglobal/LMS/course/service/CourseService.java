@@ -16,15 +16,15 @@ public class CourseService implements ICourseService{
 	ICourseRepository courseRepository;
 	
 	@Override
-	public List<Course> getCourseList(int studentId) {
+	public List<Course> getCourseList(String studentId) {
 		//System.out.println("--CourseService---");
 		return courseRepository.getCourseList(studentId);
 	}
 
 	@Override
 	public void insertCourse(Course course) {
-		System.out.println("==========insertCourse===========");
-		System.out.println("course>>>"+course);
+//		System.out.println("==========insertCourse===========");
+//		System.out.println("course>>>"+course);
 		courseRepository.insertCourse(course);
 	}
 
@@ -39,10 +39,10 @@ public class CourseService implements ICourseService{
 //	}
 
 	@Override
-	public int deleteCourse(int studentId, int courseId) {
-		System.out.println("=====deleteCourseService====");
-		System.out.println("studentId >> "+studentId);
-		System.out.println("courseId >> "+courseId);
+	public int deleteCourse(String studentId, int courseId) {
+//		System.out.println("=====deleteCourseService====");
+//		System.out.println("studentId >> "+studentId);
+//		System.out.println("courseId >> "+courseId);
 		return courseRepository.deleteCourse(studentId, courseId);
 	}
 
