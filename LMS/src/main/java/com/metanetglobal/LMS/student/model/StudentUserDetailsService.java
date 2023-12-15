@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.metanetglobal.LMS.student.service.IStudentService;
 
 @Component
-public class StudentVOUserDetailsService implements UserDetailsService{
+public class StudentUserDetailsService implements UserDetailsService{
 	@Autowired
 	private IStudentService studentService; 
 	@Override
@@ -29,7 +29,7 @@ public class StudentVOUserDetailsService implements UserDetailsService{
 		String[] roles = {"ROLE_USER", "ROLE_ADMIN"};
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(roles);
 		
-		return new StudentVOUserDetails(studentInfo.getName()
+		return new StudentUserDetails(studentInfo.getName()
 				, "{noop}"+studentInfo.getPassword()
 				, authorities, studentInfo.getEmail());
 	}
