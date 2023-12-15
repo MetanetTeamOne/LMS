@@ -20,8 +20,8 @@
 	student_email = #{student.email},
 	student_address = #{student.address},
 	student_phone_number = #{student.phoneNumber},
-	student_admission_year = #{student.admissionYear},
-	student_grade = #{student.grade}
+	password = #{student.password}
+	where student_id = #{studentId}
 </update>
 
 <delete id="deleteStudent">
@@ -31,6 +31,11 @@
 
 <select id="getStudentInfo">
 	select * from student
+	where student_id = #{studentId}
+</select>
+
+<select id="getPassword">
+	select password from student
 	where student_id = #{studentId}
 </select>
 </mapper>

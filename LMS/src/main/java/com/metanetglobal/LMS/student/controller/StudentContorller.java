@@ -1,5 +1,6 @@
 package com.metanetglobal.LMS.student.controller;
 
+import java.security.Principal;
 import java.util.Map;
 
 
@@ -8,6 +9,8 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
+import com.metanetglobal.LMS.student.model.StudentUpdateDto;
 import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.service.IStudentService;
 
@@ -83,16 +87,42 @@ public class StudentContorller {
 	
 	
 	@PatchMapping("/mypage/update")
-	public String updateStudent(@RequestBody Student student){
-		studentService.updateStudent(student);
-		return "ok";
+	public String updateStudent(@RequestBody StudentUpdateDto student, HttpSession session){
+		try {
+			PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+			String encodedPw = pwEncoder.encode(student.getPassword());
+			student.setPassword(encodedPw);
+			studentService.updateStudent(student);
+			session.setAttribute("email", student.getEmail());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "회원정보 수정 실패";
+		}
+		return "회원정보수정 완료";
 	}
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
-	public String deleteStudent(@RequestBody Map<String, String> map) {
-		String email = map.get("email");
-		logger.info("email {}", email);
-		studentService.deleteStudent(email);
-		return "ok";
+	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
+		try {
+			Student student = new Student();
+			String password = map.get("password");
+			String email = map.get("email");
+			student.setStudentId(principal.getName());
+			String pw = studentService.getPassword(student.getStudentId());
+			if(password != null && passwordEncoder.matches(password, pw)) {
+				student.setPassword(pw);
+				studentService.deleteStudent(email);
+			} else {
+				return "잘못된 비밀번호 입니다";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "로그아웃 실패";
+		}
+		
+		return "로그아웃 성공";
 	}
 }
