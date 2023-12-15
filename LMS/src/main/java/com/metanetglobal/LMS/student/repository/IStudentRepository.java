@@ -17,11 +17,8 @@ import com.metanetglobal.LMS.student.service.StudentService;
 @Repository
 @Mapper
 public interface IStudentRepository {
-
-
-	StudentDto findStudentById(@Param("studentId") int studentId);
+	StudentDto findStudentById(@Param("studentId") String studentId);
 	void insertStudent(@Param("student") StudentVO student);
 	void deteteStudent(@Param("email") String email);
 	void updateStudent(@Param("student") StudentVO student);
-
 }
