@@ -16,7 +16,6 @@ public class Student {
 	private String phoneNumber;
 	private String grade;
 	private Date admissionYear;
-	private String role;
 	private String password;
 	private int majorId;
 }
