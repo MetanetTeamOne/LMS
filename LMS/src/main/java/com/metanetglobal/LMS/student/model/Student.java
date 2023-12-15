@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter @Setter
 @ToString
-public class StudentVO {
+public class Student {
 	private String studentId;
 	private String name;
 	private String email;

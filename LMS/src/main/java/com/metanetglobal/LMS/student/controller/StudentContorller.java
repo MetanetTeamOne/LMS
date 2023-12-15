@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
-import com.metanetglobal.LMS.student.model.StudentVO;
+import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.service.IStudentService;
 
 
@@ -51,14 +51,14 @@ public class StudentContorller {
 	}
 	
 	@PostMapping("/signin") //회원가입
-	public String insertStudent(@RequestBody StudentVO student) {
+	public String insertStudent(@RequestBody Student student) {
 		studentService.insertStudent(student);
 		return "ok";
 	}
 	
 	
 	@PatchMapping("/mypage/update")
-	public String updateStudent(@RequestBody StudentVO student){
+	public String updateStudent(@RequestBody Student student){
 		studentService.updateStudent(student);
 		return "ok";
 	}
