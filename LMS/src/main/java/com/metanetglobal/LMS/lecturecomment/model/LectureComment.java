@@ -1,5 +1,7 @@
 package com.metanetglobal.LMS.lecturecomment.model;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,5 +14,5 @@ public class LectureComment {
 	private int courseId;
 	private int lectureId;
 	private int studentId;
-	private int	lectureCommentWriteDate;
+	private Date lectureCommentWriteDate;
 }
