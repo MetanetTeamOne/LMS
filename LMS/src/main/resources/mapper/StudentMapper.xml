@@ -25,7 +25,12 @@
 </update>
 
 <delete id="deleteStudent">
-	delete from student 
-	where email = #{email}
+	delete from student
+    where student_email = #{email}
 </delete>
+
+<select id="getStudentInfo">
+	select * from student
+	where student_id = #{studentId}
+</select>
 </mapper>

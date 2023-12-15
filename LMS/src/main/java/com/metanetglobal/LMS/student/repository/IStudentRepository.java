@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.Student;
-import com.metanetglobal.LMS.student.service.StudentService;
 
 @Repository
 @Mapper
 public interface IStudentRepository {
 	StudentDto findStudentById(@Param("studentId") String studentId);
 	void insertStudent(@Param("student") Student student);
-	void deteteStudent(@Param("email") String email);
+	void deleteStudent(@Param("email") String email);
 	void updateStudent(@Param("student") Student student);
+	Student getStudentInfo(@Param("studentId") String studentId);
 }

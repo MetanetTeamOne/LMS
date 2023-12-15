@@ -14,7 +14,6 @@ import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.repository.IStudentRepository;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class StudentService implements IStudentService {
@@ -35,11 +34,16 @@ public class StudentService implements IStudentService {
 	}
 	
 	public void deleteStudent(String email) {
-		studentRepository.deteteStudent(email);
+		studentRepository.deleteStudent(email);
 	}
 	
 	public void updateStudent(Student student) {
 		studentRepository.updateStudent(student);
+	}
+
+	@Override
+	public Student getStudentInfo(String studentId) {
+		return studentRepository.getStudentInfo(studentId);
 	}
 
 }
