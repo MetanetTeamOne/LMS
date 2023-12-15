@@ -22,7 +22,7 @@ public class StudentUserDetailsService implements UserDetailsService{
 	private IRoleRepository roleRepository; 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		StudentDto studentInfo = studentService.findStudentById(username);
+		Student studentInfo = studentService.getStudentInfo(username);
 		System.out.println(username + "loaduser");
 		System.out.println(studentInfo);
 		
@@ -43,7 +43,7 @@ public class StudentUserDetailsService implements UserDetailsService{
 		
 		System.out.println("authorities : " + authorities);
 		// 암호화되지 않은 pwd를 사용할 경우 "{noop}"+pwd로 표기한다..
-		return new StudentUserDetails(studentInfo.getName()
+		return new StudentUserDetails(studentInfo.getStudentId()
 				, studentInfo.getPassword()
 				, authorities, studentInfo.getEmail());
 	}

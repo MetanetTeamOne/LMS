@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.StudentUpdateDto;
+import com.metanetglobal.LMS.role.repository.IRoleRepository;
 import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.service.IStudentService;
 
@@ -126,32 +127,36 @@ public class StudentContorller {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	IRoleRepository roleRepository;
+	
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
 	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
 		String session_isCheck_userid = principal.getName();
 		
-		System.out.println(session_isCheck_userid);
+		System.out.println("!!!!!!!!!!!"+session_isCheck_userid);
 		
 		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
 			try {
-				Student student = new Student();
-				String password = map.get("password");
+				StudentDto student = studentService.findStudentById(session_isCheck_userid);
+				System.out.println();
 				String email = map.get("email");
-				student.setStudentId(principal.getName());
-				String pw = studentService.getPassword(student.getStudentId());
-				if(password != null && passwordEncoder.matches(password, pw)) {
-					student.setPassword(pw);
+				System.out.println("session email : "+ email + " db email : " + student.getEmail());
+				if(email.equals(student.getEmail())){
+					System.out.println("삭제!!!!!!!!!!!!!!");
+					roleRepository.deleteRole(session_isCheck_userid);
+					
 					studentService.deleteStudent(email);
-				} else {
-					return "잘못된 비밀번호 입니다";
 				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-				return "로그아웃 실패";
+				return "삭제 실패";
 			}
-				return "로그아웃 성공";
 		} else {
 			return "로그인이 필요한 서비스입니다.";
 		}
+		
+		return "삭제 성공";
 	}
 }

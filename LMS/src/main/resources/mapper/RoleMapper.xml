@@ -4,4 +4,7 @@
 <select id="getRoleName" resultType="java.lang.String">
     SELECT role_name FROM role WHERE student_id = #{studentId}
 </select>
+<delete id="deleteRole">
+	delete from role where student_id = #{studentId}
+</delete>
 </mapper>
