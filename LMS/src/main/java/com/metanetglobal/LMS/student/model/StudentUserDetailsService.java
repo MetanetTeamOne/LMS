@@ -29,8 +29,9 @@ public class StudentUserDetailsService implements UserDetailsService{
 		String[] roles = {"ROLE_USER", "ROLE_ADMIN"};
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(roles);
 		
+		// 암호화되지 않은 pwd를 사용할 경우 "{noop}"+pwd로 표기한다..
 		return new StudentUserDetails(studentInfo.getName()
-				, "{noop}"+studentInfo.getPassword()
+				, studentInfo.getPassword()
 				, authorities, studentInfo.getEmail());
 	}
 	

@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -50,8 +52,18 @@ public class StudentContorller {
 		return student;
 	}
 	
+	
 	@PostMapping("/signin") //회원가입
 	public String insertStudent(@RequestBody Student student) {
+		PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		
+		String unbcrypt_pwd = student.getPassword();
+		String bcrypt_pwd = pwEncoder.encode(unbcrypt_pwd);
+		
+//		System.out.println(bcrypt_pwd);
+		
+		student.setPassword(bcrypt_pwd);
+		
 		studentService.insertStudent(student);
 		return "ok";
 	}
