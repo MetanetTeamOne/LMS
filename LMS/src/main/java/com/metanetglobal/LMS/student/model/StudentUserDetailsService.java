@@ -26,7 +26,14 @@ public class StudentUserDetailsService implements UserDetailsService{
 			throw new UsernameNotFoundException("["+username+"]사용자가 존재하지 않습니다.");
 		}
 		
-		String[] roles = {"ROLE_USER", "ROLE_ADMIN"};
+		// 지정된 역할을 불러올 레포티토리 객체 선언.
+		IRoleRepository roleRepository;
+		
+		String request_login_user_roleName = roleRepository.getRoleName(username);
+		
+		
+		String[] roles = {request_login_user_roleName};
+		
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(roles);
 		
 		// 암호화되지 않은 pwd를 사용할 경우 "{noop}"+pwd로 표기한다..

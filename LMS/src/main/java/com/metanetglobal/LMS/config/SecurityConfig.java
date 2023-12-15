@@ -56,22 +56,22 @@ public class SecurityConfig {
       return http.build();
    }
    
-   @Bean
-   @ConditionalOnMissingBean(UserDetailsService.class)
-   public InMemoryUserDetailsManager userDetailsService() {
-      List<UserDetails> userDetailsList = new ArrayList<>();
-      userDetailsList.add(User.withUsername("foo")
-            .password("{noop}demo")
-            .roles("ADMIN").build());
-      userDetailsList.add(User.withUsername("bar")
-            .password("{noop}demo")
-            .roles("USER").build());
-      userDetailsList.add(User.withUsername("ted")
-            .password("{noop}demo")
-            .roles("ADMIN","USER").build());
-      InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(userDetailsList);
-      return manager;
-   }
+//   @Bean
+//   @ConditionalOnMissingBean(UserDetailsService.class)
+//   public InMemoryUserDetailsManager userDetailsService() {
+//      List<UserDetails> userDetailsList = new ArrayList<>();
+//      userDetailsList.add(User.withUsername("foo")
+//            .password("{noop}demo")
+//            .roles("ADMIN").build());
+//      userDetailsList.add(User.withUsername("bar")
+//            .password("{noop}demo")
+//            .roles("USER").build());
+//      userDetailsList.add(User.withUsername("ted")
+//            .password("{noop}demo")
+//            .roles("ADMIN","USER").build());
+//      InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(userDetailsList);
+//      return manager;
+//   }
    
    @Bean
    PasswordEncoder passwordEncoder() {
