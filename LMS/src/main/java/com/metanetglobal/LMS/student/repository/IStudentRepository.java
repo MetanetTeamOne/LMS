@@ -24,4 +24,5 @@ public interface IStudentRepository {
 	void updateStudent(@Param("student") StudentUpdateDto student);
 	Student getStudentInfo(@Param("studentId") String studentId);
 	String getPassword(@Param("studentId") String studentId);
+	
 }
