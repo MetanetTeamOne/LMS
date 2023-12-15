@@ -79,6 +79,7 @@ public class StudentContorller {
 		return student;
 	}
 	
+
 	   @PostMapping("/signin") //회원가입
 	   public String insertStudent(@RequestBody Student student) {
 	      PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -98,13 +99,13 @@ public class StudentContorller {
 //		studentService.insertStudent(student);
 //		return "ok";
 //	}
-	
-	
+
 	@PatchMapping("/mypage/update")
 	public String updateStudent(@RequestBody StudentUpdateDto student, HttpSession session){
 		try {
 			PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			String encodedPw = pwEncoder.encode(student.getPassword());
+			logger.info("encodedPw {}", encodedPw);
 			student.setPassword(encodedPw);
 			studentService.updateStudent(student);
 			session.setAttribute("email", student.getEmail());

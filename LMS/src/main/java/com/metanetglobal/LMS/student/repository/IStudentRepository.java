@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.StudentUpdateDto;
 import com.metanetglobal.LMS.student.model.Student;
+import com.metanetglobal.LMS.student.service.StudentService;
 
 @Repository
 @Mapper

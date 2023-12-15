@@ -19,4 +19,5 @@ public interface IStudentService {
 	public Student getStudentInfo(String studentId);
 	
 	public String getPassword(String studentId);
+
 }

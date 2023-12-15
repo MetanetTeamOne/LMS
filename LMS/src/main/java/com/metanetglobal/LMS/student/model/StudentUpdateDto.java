@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class StudentUpdateDto {
 
-	private String student_id;
+	private String studentId;
 	private String name;
 	private String email;
 	private String address;

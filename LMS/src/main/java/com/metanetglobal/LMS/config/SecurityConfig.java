@@ -48,8 +48,8 @@ public class SecurityConfig {
                   .invalidateHttpSession(true));
       
       http.authorizeHttpRequests()
-      .requestMatchers("/file/**").hasRole("ADMIN")
-      .requestMatchers("/lecture/**").hasAnyRole("USER", "ADMIN")
+      .requestMatchers("/config/**").hasRole("ADMIN")
+      .requestMatchers("/comments/**", "/course/**", "/lecture/**", "/lecturecomment/**").hasAnyRole("USER", "ADMIN")
       .requestMatchers("/**", "/css/**", "/js/**", "/image/**").permitAll()
       .requestMatchers("/student/insert", "/student/login").permitAll();
       // 빌터 패턴을 통해서 http 객체를 빌드하고 반환합니다.

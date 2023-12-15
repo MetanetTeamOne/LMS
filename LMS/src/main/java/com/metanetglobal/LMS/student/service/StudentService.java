@@ -39,6 +39,7 @@ public class StudentService implements IStudentService {
 	}
 	
 	public void updateStudent(StudentUpdateDto student) {
+		logger.info("회원정보 수정중...");
 		studentRepository.updateStudent(student);
 	}
 
