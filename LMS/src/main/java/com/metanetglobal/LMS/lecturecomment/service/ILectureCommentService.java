@@ -2,11 +2,8 @@ package com.metanetglobal.LMS.lecturecomment.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.metanetglobal.LMS.lecturecomment.model.LectureComment;
 
-@Service
 public interface ILectureCommentService {
 	List<LectureComment> getLectureComment();
 	List<LectureComment> getLectureComment(int lectureId);
