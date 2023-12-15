@@ -43,7 +43,7 @@ public class SecurityConfig {
                   // 로그아웃 뷰 페이지에 대해서 명시를 합니다. 
                   .logoutUrl("/logout")
                   // 로그아웃에 성공했을 때 이동할 페이지에 대해서 명시
-                  .logoutSuccessUrl("/login")
+                  .logoutSuccessUrl("/logoutSuccess")
                   // 세션 인증 정보에 대해서 로그아웃시 비활성화합니다.
                   .invalidateHttpSession(true));
       

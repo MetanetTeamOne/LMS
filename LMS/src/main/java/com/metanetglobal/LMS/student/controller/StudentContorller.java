@@ -25,9 +25,6 @@ import com.metanetglobal.LMS.student.service.IStudentService;
 
 import jakarta.servlet.http.HttpSession;
 
-
-
-
 @RestController
 public class StudentContorller {
 	@Autowired
@@ -38,13 +35,26 @@ public class StudentContorller {
 	
 	@GetMapping("/loginSuccess") //로그인 성공 메시지 출력
 	public String loginOk() {
-		return "loginSuccess!!!";
+		return "로그인 되었습니다!";
+	}
+	
+	@GetMapping("/logoutSuccess") //로그인 성공 메시지 출력
+	public String logoutOk() {
+		return "로그아웃 되었습니다!";
 	}
 	
 	@PostMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "로그아웃 완료";
+	public String logout(HttpSession session, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		
+		System.out.println(session_isCheck_userid);
+		
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			session.invalidate();
+			return "로그아웃 완료";
+		} else {
+			return "로그인이 필요한 서비스입니다";
+		}
 	}
 	
 	@GetMapping("/mypage") //회원정보 조회
@@ -57,40 +67,60 @@ public class StudentContorller {
 	}
 	
 
-	   @PostMapping("/signin") //회원가입
-	   public String insertStudent(@RequestBody Student student) {
-	      PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	@PostMapping("/signin") //회원가입
+	public String insertStudent(@RequestBody Student student) {
+	    PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	   
+	    String unbcrypt_pwd = student.getPassword();
+	    String bcrypt_pwd = pwEncoder.encode(unbcrypt_pwd);
 	      
-	      String unbcrypt_pwd = student.getPassword();
-	      String bcrypt_pwd = pwEncoder.encode(unbcrypt_pwd);
-	      
-//	      System.out.println(bcrypt_pwd);
-	      
-	      student.setPassword(bcrypt_pwd);
+	    student.setPassword(bcrypt_pwd);
 
-	      studentService.insertStudent(student);
-	      return "ok";
-	   }
-//	@PostMapping("/signin") //회원가입
-//	public String insertStudent(@RequestBody Student student) {
-//		studentService.insertStudent(student);
-//		return "ok";
+	    studentService.insertStudent(student);
+	    return "ok";
+	}
+
+//	@PatchMapping("/mypage/update")
+//	public String updateStudent(@RequestBody StudentUpdateDto student, HttpSession session){
+//		try {
+//			PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//			String encodedPw = pwEncoder.encode(student.getPassword());
+//			logger.info("encodedPw {}", encodedPw);
+//			student.setPassword(encodedPw);
+//			studentService.updateStudent(student);
+//			session.setAttribute("email", student.getEmail());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return "회원정보 수정 실패";
+//		}
+//		return "회원정보수정 완료";
 //	}
-
+	
 	@PatchMapping("/mypage/update")
-	public String updateStudent(@RequestBody StudentUpdateDto student, HttpSession session){
-		try {
-			PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-			String encodedPw = pwEncoder.encode(student.getPassword());
-			logger.info("encodedPw {}", encodedPw);
-			student.setPassword(encodedPw);
-			studentService.updateStudent(student);
-			session.setAttribute("email", student.getEmail());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "회원정보 수정 실패";
+	public String updateStudent(@RequestBody StudentUpdateDto student, Principal principal){
+		String session_isCheck_userid = principal.getName();
+		
+		System.out.println(session_isCheck_userid);
+		
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			try {
+				PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+				   
+			    String unbcrypt_pwd = student.getPassword();
+			    String bcrypt_pwd = pwEncoder.encode(unbcrypt_pwd);
+			      
+			    student.setPassword(bcrypt_pwd);
+				
+				studentService.updateStudent(student);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "회원정보 수정 실패";
+			}
+				return "회원정보수정 완료";
+		}else {
+			return "로그인이 필요한 서비스입니다.";
 		}
-		return "회원정보수정 완료";
+		
 	}
 	
 	@Autowired
@@ -98,23 +128,30 @@ public class StudentContorller {
 	
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
 	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
-		try {
-			Student student = new Student();
-			String password = map.get("password");
-			String email = map.get("email");
-			student.setStudentId(principal.getName());
-			String pw = studentService.getPassword(student.getStudentId());
-			if(password != null && passwordEncoder.matches(password, pw)) {
-				student.setPassword(pw);
-				studentService.deleteStudent(email);
-			} else {
-				return "잘못된 비밀번호 입니다";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "로그아웃 실패";
-		}
+		String session_isCheck_userid = principal.getName();
 		
-		return "로그아웃 성공";
+		System.out.println(session_isCheck_userid);
+		
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			try {
+				Student student = new Student();
+				String password = map.get("password");
+				String email = map.get("email");
+				student.setStudentId(principal.getName());
+				String pw = studentService.getPassword(student.getStudentId());
+				if(password != null && passwordEncoder.matches(password, pw)) {
+					student.setPassword(pw);
+					studentService.deleteStudent(email);
+				} else {
+					return "잘못된 비밀번호 입니다";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "로그아웃 실패";
+			}
+				return "로그아웃 성공";
+		} else {
+			return "로그인이 필요한 서비스입니다.";
+		}
 	}
 }
