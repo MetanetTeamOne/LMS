@@ -29,12 +29,13 @@
     where student_email = #{email}
 </delete>
 
-<select id="getStudentInfo">
-	select * from student
+<select id="getStudentInfo" resultType="com.metanetglobal.LMS.student.model.Student">
+	select student_id as studentId, student_name as name, student_email as email,  student_address as address, student_phone_number as phoneNumber, student_grade as grade, student_admission_year as admissionYear, password, major_id as majorId
+	from student
 	where student_id = #{studentId}
 </select>
 
-<select id="getPassword">
+<select id="getPassword" resultType="string">
 	select password from student
 	where student_id = #{studentId}
 </select>
