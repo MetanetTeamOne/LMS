@@ -33,9 +33,18 @@ public class StudentContorller {
 
 	private static Logger logger = LoggerFactory.getLogger(StudentContorller.class.getName());
 	
+	@GetMapping("/loginSuccess") //로그인 성공 메시지 출력
+	public String loginOk() {
+		return "loginSuccess!!!";
+	}
+	
 	@GetMapping("/mypage") //회원정보 조회
-	public StudentDto findStudentById(@RequestBody Map<String, Integer> map) {
-		StudentDto student = studentService.findStudentById(map.get("studentId"));
+	public StudentDto findStudentById(@RequestBody Map<String, String> map) {
+		String Id = map.get("studentId");
+		System.out.println(Id);
+		StudentDto student = studentService.findStudentById(Id);
+		System.out.println("!!!");
+		System.out.println(student);
 		logger.info("studentId={}", map.get("studentId"));
 		logger.info("student={}", student);
 		return student;

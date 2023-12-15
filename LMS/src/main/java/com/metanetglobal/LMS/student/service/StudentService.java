@@ -23,9 +23,10 @@ public class StudentService implements IStudentService {
 	private static Logger logger = LoggerFactory.getLogger(StudentService.class.getName());
 	
 
-	public StudentDto findStudentById(int studentId) {
+	public StudentDto findStudentById(String studentId) {
 		logger.info("서비스");
 		logger.info("studentId {}",studentId);
+		System.out.println("service" + studentId);
 		return studentRepository.findStudentById(studentId);
 	}
 	

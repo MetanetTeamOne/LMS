@@ -7,7 +7,7 @@ import com.metanetglobal.LMS.student.model.StudentVO;
 
 public interface IStudentService {
 	
-	public StudentDto findStudentById(int studentId);
+	public StudentDto findStudentById(String studentId);
 	
 	public void insertStudent(StudentVO student);
 	

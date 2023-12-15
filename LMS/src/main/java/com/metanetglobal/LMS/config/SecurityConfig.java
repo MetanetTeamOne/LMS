@@ -36,7 +36,7 @@ public class SecurityConfig {
             // 이때 사용하는 userid에 대해서 사용할 파라미터, 매개변수를 명시한는 코드이
             .usernameParameter("studentId")
             // 로그인 성공했을 때 이동할 페이지 명시
-            .defaultSuccessUrl("/"))
+            .defaultSuccessUrl("/loginSuccess"))
       
             // 로그아웃에 대해서 설정하는 곳.
             .logout(logout -> logout
