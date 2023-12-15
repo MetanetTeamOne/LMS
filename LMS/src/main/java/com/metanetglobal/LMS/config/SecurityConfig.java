@@ -49,29 +49,29 @@ public class SecurityConfig {
       
       http.authorizeHttpRequests()
       .requestMatchers("/config/**").hasRole("ADMIN")
-      .requestMatchers("/student/**", "/comments/**", "/course/**", "/lecture/**", "/lecturecomment/**").hasAnyRole("USER", "ADMIN")
+      .requestMatchers("/mypage/**", "/lecturecomment/**").hasAnyRole("USER")
       .requestMatchers("/**", "/css/**", "/js/**", "/image/**").permitAll()
-      .requestMatchers("/student/insert", "/student/login").permitAll();
+      .requestMatchers("/signin", "/login").permitAll();
       // 빌터 패턴을 통해서 http 객체를 빌드하고 반환합니다.
       return http.build();
    }
    
-   @Bean
-   @ConditionalOnMissingBean(UserDetailsService.class)
-   public InMemoryUserDetailsManager userDetailsService() {
-      List<UserDetails> userDetailsList = new ArrayList<>();
-      userDetailsList.add(User.withUsername("foo")
-            .password("{noop}demo")
-            .roles("ADMIN").build());
-      userDetailsList.add(User.withUsername("bar")
-            .password("{noop}demo")
-            .roles("USER").build());
-      userDetailsList.add(User.withUsername("ted")
-            .password("{noop}demo")
-            .roles("ADMIN","USER").build());
-      InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(userDetailsList);
-      return manager;
-   }
+//   @Bean
+//   @ConditionalOnMissingBean(UserDetailsService.class)
+//   public InMemoryUserDetailsManager userDetailsService() {
+//      List<UserDetails> userDetailsList = new ArrayList<>();
+//      userDetailsList.add(User.withUsername("foo")
+//            .password("{noop}demo")
+//            .roles("ADMIN").build());
+//      userDetailsList.add(User.withUsername("bar")
+//            .password("{noop}demo")
+//            .roles("USER").build());
+//      userDetailsList.add(User.withUsername("ted")
+//            .password("{noop}demo")
+//            .roles("ADMIN","USER").build());
+//      InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(userDetailsList);
+//      return manager;
+//   }
    
    @Bean
    PasswordEncoder passwordEncoder() {
