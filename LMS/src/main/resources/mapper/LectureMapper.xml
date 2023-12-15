@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.metanetglobal.LMS.lecture.repository.ILectureRepository">
+
+	<select id="getLectureList" resultType="com.metanetglobal.LMS.lecture.model.Lecture">
+		select 
+			LECTURE_ID as lectureId,
+			LECTURE_NAME as lectureName,
+			LECTURE_LOCATION as lectureLocation,
+			LECTURE_TIME as lectureTime,
+			LECTURE_CREDIT as lectureCredit,
+			STUDENT_GRADE as studentGrade,
+			MAJOR_ID as majorId
+		from lecture
+		<if test="majorId != null">
+			where MAJOR_ID = #{majorId}
+		</if>
+	</select>	
+
+
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.metanetglobal.LMS.course.repository.ICourseRepository">
+
+	<!-- 수강 정보 조회 -->
+	<select id="getCourseList" parameterType="int"
+		resultType="com.metanetglobal.LMS.course.model.Course">
+		select
+		course_id as courseId,
+		student_id as studentId,
+		lecture_id as lectureId
+		from course
+		where student_id = #{studentId}
+	</select>
+
+	<!-- 수강 정보 등록 -->
+	<insert id="insertCourse"
+		parameterType="com.metanetglobal.LMS.course.model.Course">
+		INSERT INTO course(course_id,student_id,lecture_id)
+		VALUES (#{courseId},#{studentId},#{lectureId})
+	</insert>
+
+
+	<!-- <insert id="insertCourse" parameterType="com.metanetglobal.LMS.course.model.CourseVO"> 
+		<![CDATA[ insert into course (course_id, student_id, lecture_id) values (#{courseId}, 
+		#{studentId}, #{lectureId}) ]]> <choose> <when test="lectureExists(lectureId)"> 
+		삽입 로직 </when> <otherwise> 예외 처리 또는 메시지 <throwException message="Parent lecture 
+		not found for lectureId: ${lectureId}" /> </otherwise> </choose> </insert> -->
+
+
+	<!-- 수강 정보 삭제 -->
+	<!-- <delete id="deleteCourse" parameterType="int">
+		delete from course where student_id = #{studentId} and lecture_id=#{lectureId}
+	</delete> -->
+	
+	<delete id="deleteCourse" parameterType="int">
+	 <!--    DELETE FROM lecturecomment
+	    WHERE course_id IN (SELECT course_id FROM course WHERE course_id = #{courseId})
+	 -->
+	    DELETE FROM course
+	    WHERE student_id = #{studentId} and course_id = #{courseId}
+	</delete>
+	
+	
+	
+	<!-- <delete id="deleteCourse" parameterType="int">
+		delete from lecturecomment
+		where exists (select cousre_id from course
+						where course.cousre_id=lecturecomment.cousre_id);
+		delete from course
+		where cousre_id=#{cousre_id};
+		course_id = #{courseId} and student_id=#{studentId}
+	</delete> -->
+
+</mapper>
