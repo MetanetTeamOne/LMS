@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
-import com.metanetglobal.LMS.student.model.StudentFormDto;
 import com.metanetglobal.LMS.student.model.StudentVO;
 import com.metanetglobal.LMS.student.service.IStudentService;
 
