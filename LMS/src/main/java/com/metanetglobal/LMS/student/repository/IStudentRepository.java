@@ -3,6 +3,7 @@ package com.metanetglobal.LMS.student.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.metanetglobal.LMS.student.model.StudentVO;
@@ -11,9 +12,8 @@ import com.metanetglobal.LMS.student.model.StudentVO;
 @Mapper
 public interface IStudentRepository {
 
-	List<StudentVO> findAllStudents();
-	StudentVO findStudentById(int studentId);
+	StudentVO findStudentById(@Param("studentId") int studentId);
 	void insertStudent(StudentVO student);
-	void deteteStudentById(int studentId);
+	void deteteStudent(@Param("email") String email);
 	void updateStudent(StudentVO student);
 }

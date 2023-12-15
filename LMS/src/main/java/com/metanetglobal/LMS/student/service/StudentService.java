@@ -13,10 +13,6 @@ public class StudentService implements IStudentService {
 	@Autowired
 	IStudentRepository studentRepository;
 	
-	public List<StudentVO> findAllStudents(){
-		return studentRepository.findAllStudents();
-	}
-	
 	public StudentVO findStudentById(int studentId) {
 		return studentRepository.findStudentById(studentId);
 	}
@@ -25,12 +21,12 @@ public class StudentService implements IStudentService {
 		studentRepository.insertStudent(student);
 	}
 	
-	public void deleteStudentById(int studentId) {
-		studentRepository.deteteStudentById(studentId);
+	public void deleteStudent(String email) {
+		studentRepository.deteteStudent(email);
 	}
 	
 	public void updateStudent(StudentVO student) {
 		studentRepository.updateStudent(student);
 	}
-	
+
 }
