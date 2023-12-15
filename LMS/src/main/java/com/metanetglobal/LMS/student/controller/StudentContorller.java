@@ -133,9 +133,7 @@ public class StudentContorller {
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
 	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
 		String session_isCheck_userid = principal.getName();
-		
-		System.out.println("!!!!!!!!!!!"+session_isCheck_userid);
-		
+				
 		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
 			try {
 				StudentDto student = studentService.findStudentById(session_isCheck_userid);
