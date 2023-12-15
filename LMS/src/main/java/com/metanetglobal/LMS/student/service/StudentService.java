@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.metanetglobal.LMS.student.controller.StudentContorller;
 import com.metanetglobal.LMS.student.model.StudentDto;
-import com.metanetglobal.LMS.student.model.StudentFormDto;
-import com.metanetglobal.LMS.student.model.StudentVO;
+import com.metanetglobal.LMS.student.model.StudentUpdateDto;
+import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.repository.IStudentRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +23,13 @@ public class StudentService implements IStudentService {
 	IStudentRepository studentRepository;
 	private static Logger logger = LoggerFactory.getLogger(StudentService.class.getName());
 	
-	public StudentDto findStudentById(int studentId) {
+	public StudentDto findStudentById(String studentId) {
 		logger.info("서비스");
 		logger.info("studentId {}",studentId);
 		return studentRepository.findStudentById(studentId);
 	}
 	
-	public void insertStudent(StudentVO student) {
+	public void insertStudent(Student student) {
 		studentRepository.insertStudent(student);
 	}
 	
@@ -37,7 +37,7 @@ public class StudentService implements IStudentService {
 		studentRepository.deteteStudent(email);
 	}
 	
-	public void updateStudent(StudentVO student) {
+	public void updateStudent(StudentUpdateDto student) {
 		studentRepository.updateStudent(student);
 	}
 

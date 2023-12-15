@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.StudentFormDto;
-import com.metanetglobal.LMS.student.model.StudentVO;
+import com.metanetglobal.LMS.student.model.StudentUpdateDto;
+import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.service.StudentService;
 
 @Repository
@@ -18,7 +19,7 @@ import com.metanetglobal.LMS.student.service.StudentService;
 public interface IStudentRepository {
 
 	StudentDto findStudentById(@Param("studentId") int studentId);
-	void insertStudent(@Param("student") StudentVO student);
+	void insertStudent(@Param("student") Student student);
 	void deteteStudent(@Param("email") String email);
-	void updateStudent(@Param("student") StudentVO student);
+	void updateStudent(@Param("student") StudentUpdateDto student);
 }
