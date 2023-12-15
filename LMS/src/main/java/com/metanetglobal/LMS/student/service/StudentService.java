@@ -23,6 +23,7 @@ public class StudentService implements IStudentService {
 	IStudentRepository studentRepository;
 	private static Logger logger = LoggerFactory.getLogger(StudentService.class.getName());
 	
+
 	public StudentDto findStudentById(int studentId) {
 		logger.info("서비스");
 		logger.info("studentId {}",studentId);

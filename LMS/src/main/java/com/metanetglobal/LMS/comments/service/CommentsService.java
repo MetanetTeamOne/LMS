@@ -2,45 +2,41 @@ package com.metanetglobal.LMS.comments.service;
 
 import java.util.List;
 
-import com.metanetglobal.LMS.lecutrecomment.model.LectureCommentVO;
-import com.metanetglobal.LMS.lecutrecomment.service.ILectureCommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class CommentsService implements ILectureCommentService {
+import com.metanetglobal.LMS.comments.model.Comments;
+import com.metanetglobal.LMS.comments.repository.ICommentsRepository;
+
+@Service
+public class CommentsService implements ICommentsService {
+	
+	@Autowired
+	ICommentsRepository commentsRepository;
 
 	@Override
-	public List<LectureCommentVO> getLectureAllComment() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Comments> getLectureIdComments(int lectureCommentId) {
+		return commentsRepository.getLectureIdComments(lectureCommentId);
 	}
 
 	@Override
-	public LectureCommentVO getLectureLectureIdComment(int lectureId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Comments getComments(int commentsId) {
+		return commentsRepository.getComments(commentsId);
 	}
 
 	@Override
-	public LectureCommentVO getLectureStudentIdCommnet(int studentId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void insertComments(Comments comments) {
+		commentsRepository.insertComments(comments);
 	}
 
 	@Override
-	public void insertLectureComment(LectureCommentVO lectureCommentVO) {
-		// TODO Auto-generated method stub
-		
+	public void updateComments(Comments comments) {
+		commentsRepository.updateComments(comments);
 	}
 
 	@Override
-	public void updateLectureComment(LectureCommentVO lectureCommentVO) {
-		// TODO Auto-generated method stub
-		
+	public void deleteComments(int commentsId, int studentId) {
+		commentsRepository.deleteComments(commentsId, studentId);
 	}
-
-	@Override
-	public void deleteLectureComment(int lectureCommentId, int studentId) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }
