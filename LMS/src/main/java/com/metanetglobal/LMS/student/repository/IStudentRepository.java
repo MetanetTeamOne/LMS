@@ -19,6 +19,7 @@ import com.metanetglobal.LMS.student.service.StudentService;
 public interface IStudentRepository {
 	StudentDto findStudentById(@Param("studentId") String studentId);
 	void insertStudent(@Param("student") Student student);
-	void deteteStudent(@Param("email") String email);
+	void deleteStudent(@Param("email") String email);
 	void updateStudent(@Param("student") Student student);
+	Student getStudentInfo(@Param("studentId") String studentId);
 }

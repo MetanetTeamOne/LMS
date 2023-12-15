@@ -14,4 +14,7 @@ public interface IStudentService {
 	public void deleteStudent(String email);
 	
 	public void updateStudent(Student student);
+	
+	public Student getStudentInfo(String studentId);
+
 }
