@@ -41,6 +41,7 @@ ALTER TABLE STUDENT
 		);
 
 CREATE TABLE COURSE (
+	course_id NUMBER NOT NULL
 	student_id NUMBER NOT NULL,
 	lecture_id NUMBER NOT NULL
 );
@@ -49,6 +50,7 @@ ALTER TABLE COURSE
 	ADD
 		CONSTRAINT PK_COURSE
 		PRIMARY KEY (
+			course_id,
 			student_id,
 			lecture_id
 		);
@@ -118,9 +120,11 @@ ALTER TABLE ROLE
 CREATE TABLE LECTURECOMMENT (
 	lecture_comment_id NUMBER NOT NULL,
 	lecture_comment_content VARCHAR2(100),
-	lecture_star_score NUMBER,
+	lecture_comment_star_score NUMBER,
+    	course_id NUMBER,
+	lecture_id NUMBER,
 	student_id NUMBER,
-	lecture_id NUMBER
+    lecture_comment_write_date DATE
 );
 
 ALTER TABLE LECTURECOMMENT
@@ -131,9 +135,11 @@ ALTER TABLE LECTURECOMMENT
 		);
 
 CREATE TABLE COMMENTS (
-	comments_id NUMBER NOT NULL,
-	comments_content VARCHAR2(100),
-	lecture_comment_id NUMBER
+    comments_id NUMBER NOT NULL,
+    comments_content VARCHAR2(100),
+    lecture_comment_id NUMBER,
+    student_id NUMBER,
+    comment_write_date DATE
 );
 
 ALTER TABLE COMMENTS
@@ -227,10 +233,12 @@ ALTER TABLE LECTURECOMMENT
 	ADD
 		CONSTRAINT FK_COURSE_TO_LECTURECOMMENT
 		FOREIGN KEY (
+            course_id,
 			student_id,
 			lecture_id
 		)
 		REFERENCES COURSE (
+            course_id,
 			student_id,
 			lecture_id
 		);
@@ -243,4 +251,14 @@ ALTER TABLE COMMENTS
 		)
 		REFERENCES LECTURECOMMENT (
 			lecture_comment_id
+		);
+
+ALTER TABLE COMMENTS
+	ADD
+		CONSTRAINT FK_STUDENT_TO_COMMENTS
+		FOREIGN KEY (
+			student_id
+		)
+		REFERENCES STUDENT (
+			student_id
 		);

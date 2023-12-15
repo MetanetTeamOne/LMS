@@ -1,5 +1,13 @@
 package com.metanetglobal.LMS.comments.service;
 
-public interface ICommentsService {
+import java.util.List;
 
+import com.metanetglobal.LMS.comments.model.Comments;
+
+public interface ICommentsService {
+	List<Comments> getLectureIdComments(int lectureCommentId);
+	Comments getComments(int commentsId);
+	void insertComments(Comments comments);
+	void updateComments(Comments comments);
+	void deleteComments(int commentsId, int studentId);
 }
