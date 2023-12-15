@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
-import com.metanetglobal.LMS.student.model.StudentFormDto;
 import com.metanetglobal.LMS.student.model.StudentVO;
 import com.metanetglobal.LMS.student.service.StudentService;
 
