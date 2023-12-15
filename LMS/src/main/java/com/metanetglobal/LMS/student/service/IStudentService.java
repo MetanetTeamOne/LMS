@@ -16,4 +16,5 @@ public interface IStudentService {
 	public void updateStudent(Student student);
 	
 	public Student getStudentInfo(String studentId);
+
 }
