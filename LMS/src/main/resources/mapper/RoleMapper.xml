@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.metanetglobal.LMS.role.repository.IRoleRepository">
-<select id="getRoleName">
-	select role_name from role where student_id = #{studentId}
+<select id="getRoleName" resultType="java.lang.String">
+    SELECT role_name FROM role WHERE student_id = #{studentId}
 </select>
 </mapper>

@@ -49,9 +49,9 @@ public class SecurityConfig {
       
       http.authorizeHttpRequests()
       .requestMatchers("/config/**").hasRole("ADMIN")
-      .requestMatchers("/student/**", "/comments/**", "/course/**", "/lecture/**", "/lecturecomment/**").hasAnyRole("USER", "ADMIN")
+      .requestMatchers("/mypage/**", "/lecturecomment/**").hasAnyRole("USER")
       .requestMatchers("/**", "/css/**", "/js/**", "/image/**").permitAll()
-      .requestMatchers("/student/insert", "/student/login").permitAll();
+      .requestMatchers("/signin", "/login").permitAll();
       // 빌터 패턴을 통해서 http 객체를 빌드하고 반환합니다.
       return http.build();
    }
