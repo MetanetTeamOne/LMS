@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.metanetglobal.LMS.lecutrecomment.model.LectureCommentVO;
 
-@Service
 public interface ILectureCommentService {
 	public List<LectureCommentVO> getLectureAllComment();
 	public LectureCommentVO getLectureLectureIdComment(int lectureId);

@@ -3,10 +3,12 @@ package com.metanetglobal.LMS.lecutrecomment.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.metanetglobal.LMS.lecutrecomment.model.LectureCommentVO;
 import com.metanetglobal.LMS.lecutrecomment.repository.ILectureCommentRepository;
 
+@Service
 public class LectureCommentService implements ILectureCommentService {
 
 	@Autowired
