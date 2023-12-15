@@ -36,7 +36,7 @@
 		delete from course where student_id = #{studentId} and lecture_id=#{lectureId}
 	</delete> -->
 	
-	<delete id="deleteCourse" parameterType="int">
+	<delete id="deleteCourse">
 	 <!--    DELETE FROM lecturecomment
 	    WHERE course_id IN (SELECT course_id FROM course WHERE course_id = #{courseId})
 	 -->
