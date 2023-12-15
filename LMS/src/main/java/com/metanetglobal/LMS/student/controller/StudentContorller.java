@@ -39,29 +39,6 @@ public class StudentContorller {
 		return "loginSuccess!!!";
 	}
 	
-	@PostMapping("/login")
-	public String login(String studentId, String password, HttpSession session) {
-		Student student = studentService.getStudentInfo(studentId);
-		
-		if(student != null) {
-			logger.info("student {}", student);
-			String pw = student.getPassword();
-			if(pw.equals(password)) {//비밀번호 일치할 경우
-				session.setMaxInactiveInterval(600);
-				session.setAttribute("studentId", studentId);
-				session.setAttribute("name", student.getName());
-				session.setAttribute("email", student.getEmail());
-			} else {
-				session.invalidate();
-				return "잘못된 비밀번호 입니다.";
-			}
-		}else { //아이디가 없음
-			session.invalidate();
-			return "유저가 없습니다.";
-		}
-		return "로그인 성공";
-	}
-	
 	@PostMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -96,6 +73,15 @@ public class StudentContorller {
 	
 	@PatchMapping("/mypage/update")
 	public String updateStudent(@RequestBody Student student){
+		PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		
+		String unbcrypt_pwd = student.getPassword();
+		String bcrypt_pwd = pwEncoder.encode(unbcrypt_pwd);
+		
+//		System.out.println(bcrypt_pwd);
+		
+		student.setPassword(bcrypt_pwd);
+		
 		studentService.updateStudent(student);
 		return "ok";
 	}
