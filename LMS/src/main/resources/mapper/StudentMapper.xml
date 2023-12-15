@@ -2,34 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.metanetglobal.LMS.student.repository.IStudentRepository">
-<select id="findAllStudents" resultType="list">
-	select student_id, student_name, student_email, student_address, student_phone_number, student_grade, student_admission_year, major_id
-	from student
-</select>
-
-<select id="findStudentById" resultType="StudentVO">
-	select student_id, student_name, student_email, student_address, student_phone_number, student_grade, student_admission_year, major_id
+<select id="findStudentById" parameterType="int" resultType="com.metanetglobal.LMS.student.model.StudentDto">
+	select student_name as name, student_email as email,  student_address as address, student_phone_number as phoneNumber, student_grade as grade, student_admission_year as admissionYear, password
 	from student
 	where student_id = #{studentId}
 </select>
 
 <insert id="insertStudent">
-	insert into student values(#{student.studentId}, #{}student.name},#{student.email},#{student.address}, #{student.phoneNumber}, #{student.grade}, #{student.admissionYear}, #{student.majorId})
+	insert into student(student_id, student_name, student_email, student_address, student_phone_number, student_grade, student_admission_year, password, major_id) 
+	values(#{student.studentId}, #{student.name},#{student.email},#{student.address}, #{student.phoneNumber}, #{student.grade}, #{student.admissionYear}, #{student.password}, #{student.majorId})
 </insert>
 
 <update id="updateStudent">
 	update student
-	set student_Name = #{student.name},
+	set 
+	student_name = #{student.name},
 	student_email = #{student.email},
 	student_address = #{student.address},
 	student_phone_number = #{student.phoneNumber},
-	grade, student_admission_year = #{student.admissionYear}
-	student_grade = #{student.grade},
-	major_id = #{student.majorId}
+	student_admission_year = #{student.admissionYear},
+	student_grade = #{student.grade}
 </update>
 
-<delete>
+<delete id="deleteStudent">
 	delete from student 
-	where student_id = #{studentId} and student_email = #{email}
+	where email = #{email}
 </delete>
 </mapper>
