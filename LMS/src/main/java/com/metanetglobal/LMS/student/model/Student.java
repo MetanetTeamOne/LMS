@@ -19,4 +19,6 @@ public class Student {
 	private String role;
 	private String password;
 	private int majorId;
+	
+	
 }
