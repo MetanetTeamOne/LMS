@@ -6,7 +6,8 @@
 	namespace="com.metanetglobal.LMS.course.repository.ICourseRepository">
 
 	<!-- 수강 정보 조회 -->
-	<select id="getCourseList" resultType="com.metanetglobal.LMS.course.model.Course">
+	<select id="getCourseList" 
+		resultType="com.metanetglobal.LMS.course.model.Course">
 		select
 		course_id as courseId,
 		student_id as studentId,

@@ -123,7 +123,13 @@ public class StudentContorller {
 			      
 			    student.setPassword(bcrypt_pwd);
 				
-				studentService.updateStudent(student);
+			    if (student.getStudentId().equals(session_isCheck_userid)) {
+			    	student.setStudentId(session_isCheck_userid);
+				    
+					studentService.updateStudent(student);
+			    }else {
+			    	return "회원정보 수정 실패";
+			    }
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "회원정보 수정 실패";
@@ -132,16 +138,14 @@ public class StudentContorller {
 		}else {
 			return "로그인이 필요한 서비스입니다.";
 		}
-		
 	}
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	
-	
 	@Autowired
 	ICourseService courseService;
+	
 	
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
 	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
@@ -155,12 +159,21 @@ public class StudentContorller {
 				if(email.equals(student.getEmail())){
 					System.out.println("삭제!!!!!!!!!!!!!!");
 					List<Course> courseList = courseService.getCourseList(session_isCheck_userid);
-					for (Course course : courseList) {
+					
+					System.out.println("리스트는!~~~~~: " + courseList);
+					
+					for(Course course : courseList) {
+						System.out.println("학생 id : " + session_isCheck_userid + "학생 강좌 리스트");
+						System.out.println(course.getCourseId());
+						
 						courseService.deleteCourse(session_isCheck_userid, course.getCourseId());
 					}
+
 					roleRepository.deleteRole(session_isCheck_userid);
 					
 					studentService.deleteStudent(email);
+					
+					return "삭제 성공";
 				}
 				
 			} catch (Exception e) {
@@ -170,7 +183,7 @@ public class StudentContorller {
 		} else {
 			return "로그인이 필요한 서비스입니다.";
 		}
+		return "삭제 실패";
 		
-		return "삭제 성공";
 	}
 }

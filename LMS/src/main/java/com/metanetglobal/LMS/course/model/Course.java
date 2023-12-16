@@ -8,7 +8,7 @@ import lombok.ToString;
 public class Course {
 
 	private int courseId;
-	private int studentId;
+	private String studentId;
 	private int lectureId;
 	
 
