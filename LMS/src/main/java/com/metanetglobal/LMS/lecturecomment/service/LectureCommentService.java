@@ -39,7 +39,7 @@ public class LectureCommentService implements ILectureCommentService {
 	}
 
 	@Override
-	public void deleteLectureComment(int lectureCommentId, int studentId) {
+	public void deleteLectureComment(int lectureCommentId, String studentId) {
 		lectureCommentRepository.deleteLectureComment(lectureCommentId, studentId);
 	}
 	

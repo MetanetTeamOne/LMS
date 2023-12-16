@@ -37,8 +37,8 @@
 		</set>
 		WHERE comments_id=#{commentsId}
 	</update>
-	<delete id="deleteComments" parameterType="int">
-		DELETE FROM COMMENTS 
+	<delete id="deleteComments">
+		DELETE FROM COMMENTS
 		WHERE comments_id = #{commentsId} and student_id = #{studentId}
 	</delete>
 </mapper>

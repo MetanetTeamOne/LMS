@@ -13,5 +13,5 @@ public interface ILectureCommentService {
 	LectureComment getLectureCommentIdLectureComment(int lectureCommentId);
 	void insertLectureComment(LectureComment lectureComment);
 	void updateLectureComment(LectureComment lectureComment);
-	void deleteLectureComment(int lectureCommentId, int studentId);
+	void deleteLectureComment(int lectureCommentId, String studentId);
 }

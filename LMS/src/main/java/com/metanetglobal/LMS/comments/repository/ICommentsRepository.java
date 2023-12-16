@@ -3,6 +3,7 @@ package com.metanetglobal.LMS.comments.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.metanetglobal.LMS.comments.model.Comments;
@@ -14,5 +15,5 @@ public interface ICommentsRepository {
 	Comments getComments(int commentsId);
 	void insertComments(Comments comments);
 	void updateComments(Comments comments);
-	void deleteComments(int commentsId, int studentId);
+	void deleteComments(@Param("commentsId") int commentsId, @Param("studentId") String studentId);
 }
