@@ -35,6 +35,8 @@ public class CommentsController {
 		String session_isCheck_userid = principal.getName();
 		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
 			System.out.println("lectureCommentId : " + lectureCommentId);
+			
+			System.out.println(commentsService.getLectureIdComments(lectureCommentId));
 			return commentsService.getLectureIdComments(lectureCommentId);
 		}
 		return null;

@@ -13,6 +13,6 @@ public class LectureComment {
 	private int lectureCommentStarScore;
 	private int courseId;
 	private int lectureId;
-	private int studentId;
+	private String studentId;
 	private Date lectureCommentWriteDate;
 }

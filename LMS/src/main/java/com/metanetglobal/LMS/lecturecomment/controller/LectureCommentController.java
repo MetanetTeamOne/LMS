@@ -55,6 +55,8 @@ public class LectureCommentController {
 	public String insertLectureComment(@RequestBody LectureComment lectureComment, Principal principal) {
 		String session_isCheck_userid = principal.getName();
 		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			
+			System.out.println(lectureComment);
 			lectureCommentService.insertLectureComment(lectureComment);
 			return "ok";
 		}

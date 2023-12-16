@@ -7,4 +7,7 @@
 <delete id="deleteRole">
 	delete from role where student_id = #{studentId}
 </delete>
+<insert id="insertRole">
+	insert into role values(#{role.studentId}, #{role.roleName})
+</insert>
 </mapper>

@@ -41,7 +41,7 @@ ALTER TABLE STUDENT
 CREATE TABLE COURSE (
    student_id VARCHAR2(50) NOT NULL,
    lecture_id NUMBER NOT NULL,
-   course_Id NUMBER NOT NULL
+   course_id NUMBER NOT NULL
 );
 
 ALTER TABLE COURSE
@@ -50,7 +50,7 @@ ALTER TABLE COURSE
       PRIMARY KEY (
          student_id,
          lecture_id,
-         course_Id
+         course_id
       );
 
 CREATE TABLE LECTURE (
@@ -172,12 +172,12 @@ ALTER TABLE LECTURECOMMENT
       FOREIGN KEY (
          student_id,
          lecture_id,
-         course_Id
+         course_id
       )
       REFERENCES COURSE (
          student_id,
          lecture_id,
-         course_Id
+         course_id
       ) ON DELETE CASCADE;
 
 ALTER TABLE COMMENTS
@@ -199,23 +199,25 @@ ALTER TABLE ROLE
       REFERENCES STUDENT (
          student_id
       );
-      
-CREATE OR REPLACE TRIGGER TRG_INSERT_ROLE_AFTER_STUDENT
-AFTER INSERT ON STUDENT
-FOR EACH ROW
-BEGIN
-   INSERT INTO ROLE (student_id, role_name)
-   VALUES (:NEW.student_id, 'ROLE_USER');
-END;
 
-INSERT INTO MAJOR VALUES (1, '11111!');
-INSERT INTO STUDENT VALUES ('1', '11111!', '11111!', '11111!', '11111!',5, SYSDATE,'111',1);
-INSERT INTO LECTURE VALUES (1, '11111!', '11111!', '11111!', 1,1,1);
-INSERT INTO COURSE VALUES ('1',1,1);
-INSERT INTO LECTURECOMMENT VALUES (1, '11111!', 5, 1, 1, '1', SYSDATE);
-INSERT INTO COMMENTS VALUES (1, '11111!', 1, '1', SYSDATE);
-INSERT INTO ROLE VALUES ('1', 'ROLE_ADMIN');
+INSERT INTO MAJOR VALUES (1, 'SW Developer');
+INSERT INTO STUDENT VALUES ('chlrkdls1269', 'Gain', 'chlrkdls1269@gmail.com', 'Seoul', '010-6644-1269', 
+4, SYSDATE, '{bcrypt}$2a$12$oaROLB/4wEc85NEVkCKmjePoPz.IB1rENi0903Rl5UWW6TTTP6wZi', 1);
+INSERT INTO LECTURE VALUES (1, '파이썬 기초', '공학관 301호', '11:30 ~ 13:15', 3, 4, 1);
+INSERT INTO COURSE VALUES ('chlrkdls1269', 1, 1);
+INSERT INTO LECTURECOMMENT VALUES (1, '교수님이 설명을 잘하셔서 쉽게 이해하기 좋았습니다!', 5, 1, 1, 'chlrkdls1269', SYSDATE);
+INSERT INTO LECTURECOMMENT VALUES (2, '교수님이 설명을 잘하셔서 쉽게 이해하기 좋았습니다!', 5, 1, 1, 'chlrkdls1269', SYSDATE);
+INSERT INTO COMMENTS VALUES (1, '안녕하세요!', 1, 'chlrkdls1269', SYSDATE);
+INSERT INTO ROLE VALUES ('chlrkdls1269', 'ROLE_USER');
 
+commit;
+
+desc lecturecomment;
+desc course;
+desc lecture;
+desc major;
+desc student;
+desc comments;
 desc ROLE;
 
 SELECT * FROM  MAJOR;      
@@ -225,4 +227,20 @@ SELECT * FROM  COURSE;
 SELECT * FROM  LECTURECOMMENT;  
 SELECT * FROM  COMMENTS;  
 SELECT * FROM  ROLE;  
-commit;
+
+
+select
+course_id as courseId,
+student_id as studentId,
+lecture_id as lectureId
+from course
+where student_id = 'chlrkdls1269';
+
+INSERT INTO COMMENTS 
+(comments_id, comments_content, lecture_comment_id, student_id, comment_write_date)
+VALUES 
+(#{commentsId}, #{commentsContent}, #{lectureCommentId}, #{studentId}, SYSDATE)
+
+INSERT INTO COMMENTS VALUES (1, '안녕하세요!', 1, 'chlrkdls1269', SYSDATE);
+
+INSERT INTO LECTURECOMMENT VALUES (1, '교수님이 설명을 잘하셔서 쉽게 이해하기 좋았습니다!', 5, 1, 1, 'chlrkdls1269', SYSDATE);
