@@ -59,7 +59,7 @@ CREATE TABLE LECTURE (
    lecture_location VARCHAR2(20),
    lecture_time VARCHAR2(20),
    lecture_credit NUMBER,
-   grade NUMBER,
+   student_grade NUMBER,
    major_id NUMBER
 );
 
@@ -85,10 +85,11 @@ ALTER TABLE MAJOR
 CREATE TABLE LECTURECOMMENT (
    lecture_comment_id NUMBER NOT NULL,
    lecture_comment_content VARCHAR2(100),
-   lecture_star_score NUMBER,
-   student_id VARCHAR2(50),
+   lecture_comment_star_score NUMBER,
+   course_id NUMBER,
    lecture_id NUMBER,
-   course_Id NUMBER
+   student_id VARCHAR2(50),
+   lecture_comment_write_date DATE
 );
 
 ALTER TABLE LECTURECOMMENT
@@ -101,7 +102,9 @@ ALTER TABLE LECTURECOMMENT
 CREATE TABLE COMMENTS (
    comments_id NUMBER NOT NULL,
    comments_content VARCHAR2(100),
-   lecture_comment_id NUMBER
+   lecture_comment_id NUMBER,
+   student_id VARCHAR2(50),
+   comment_write_date DATE
 );
 
 ALTER TABLE COMMENTS
@@ -175,7 +178,7 @@ ALTER TABLE LECTURECOMMENT
          student_id,
          lecture_id,
          course_Id
-      );
+      ) ON DELETE CASCADE;
 
 ALTER TABLE COMMENTS
    ADD
@@ -185,7 +188,7 @@ ALTER TABLE COMMENTS
       )
       REFERENCES LECTURECOMMENT (
          lecture_comment_id
-      );
+      ) ON DELETE CASCADE;
 
 ALTER TABLE ROLE
    ADD
@@ -196,3 +199,30 @@ ALTER TABLE ROLE
       REFERENCES STUDENT (
          student_id
       );
+      
+CREATE OR REPLACE TRIGGER TRG_INSERT_ROLE_AFTER_STUDENT
+AFTER INSERT ON STUDENT
+FOR EACH ROW
+BEGIN
+   INSERT INTO ROLE (student_id, role_name)
+   VALUES (:NEW.student_id, 'ROLE_USER');
+END;
+
+INSERT INTO MAJOR VALUES (1, '11111!');
+INSERT INTO STUDENT VALUES ('1', '11111!', '11111!', '11111!', '11111!',5, SYSDATE,'111',1);
+INSERT INTO LECTURE VALUES (1, '11111!', '11111!', '11111!', 1,1,1);
+INSERT INTO COURSE VALUES ('1',1,1);
+INSERT INTO LECTURECOMMENT VALUES (1, '11111!', 5, 1, 1, '1', SYSDATE);
+INSERT INTO COMMENTS VALUES (1, '11111!', 1, '1', SYSDATE);
+INSERT INTO ROLE VALUES ('1', 'ROLE_ADMIN');
+
+desc ROLE;
+
+SELECT * FROM  MAJOR;      
+SELECT * FROM  STUDENT;  
+SELECT * FROM  LECTURE;  
+SELECT * FROM  COURSE;  
+SELECT * FROM  LECTURECOMMENT;  
+SELECT * FROM  COMMENTS;  
+SELECT * FROM  ROLE;  
+commit;

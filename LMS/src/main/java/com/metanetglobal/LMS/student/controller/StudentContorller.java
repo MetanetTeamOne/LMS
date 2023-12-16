@@ -1,6 +1,7 @@
 package com.metanetglobal.LMS.student.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.StudentUpdateDto;
+import com.metanetglobal.LMS.course.model.Course;
+import com.metanetglobal.LMS.course.service.ICourseService;
 import com.metanetglobal.LMS.role.repository.IRoleRepository;
 import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.service.IStudentService;
@@ -130,6 +133,9 @@ public class StudentContorller {
 	@Autowired
 	IRoleRepository roleRepository;
 	
+	@Autowired
+	ICourseService courseService;
+	
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
 	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
 		String session_isCheck_userid = principal.getName();		
@@ -141,9 +147,22 @@ public class StudentContorller {
 				System.out.println("session email : "+ email + " db email : " + student.getEmail());
 				if(email.equals(student.getEmail())){
 					System.out.println("삭제!!!!!!!!!!!!!!");
+					List<Course> courseList = courseService.getCourseList(session_isCheck_userid);
+					
+					System.out.println("리스트는!~~~~~: " + courseList);
+					
+					for(Course course : courseList) {
+						System.out.println("학생 id : " + session_isCheck_userid + "학생 강좌 리스트");
+						System.out.println(course.getCourseId());
+						
+						courseService.deleteCourse(session_isCheck_userid, course.getCourseId());
+					}
+					
 					roleRepository.deleteRole(session_isCheck_userid);
 					
 					studentService.deleteStudent(email);
+					
+					return "삭제 성공";
 				}
 				
 			} catch (Exception e) {
@@ -153,7 +172,7 @@ public class StudentContorller {
 		} else {
 			return "로그인이 필요한 서비스입니다.";
 		}
+		return "삭제 실패";
 		
-		return "삭제 성공";
 	}
 }
