@@ -1,6 +1,7 @@
 package com.metanetglobal.LMS.student.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.metanetglobal.LMS.student.model.StudentDto;
 import com.metanetglobal.LMS.student.model.StudentUpdateDto;
+import com.metanetglobal.LMS.course.model.Course;
+import com.metanetglobal.LMS.course.service.ICourseService;
+import com.metanetglobal.LMS.role.model.Role;
 import com.metanetglobal.LMS.role.repository.IRoleRepository;
 import com.metanetglobal.LMS.student.model.Student;
 import com.metanetglobal.LMS.student.service.IStudentService;
@@ -30,6 +34,8 @@ import jakarta.servlet.http.HttpSession;
 public class StudentContorller {
 	@Autowired
 	IStudentService studentService;	
+	@Autowired
+	IRoleRepository roleRepository;
 	
 
 	private static Logger logger = LoggerFactory.getLogger(StudentContorller.class.getName());
@@ -77,7 +83,12 @@ public class StudentContorller {
 	      
 	    student.setPassword(bcrypt_pwd);
 
+	    Role role = new Role();
+	    role.setStudentId(student.getStudentId());
+	    role.setRoleName("ROLE_USER");
 	    studentService.insertStudent(student);
+	    roleRepository.insertRole(role);
+	    
 	    return "ok";
 	}
 
@@ -127,8 +138,10 @@ public class StudentContorller {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	
+	
 	@Autowired
-	IRoleRepository roleRepository;
+	ICourseService courseService;
 	
 	@DeleteMapping("/mypage/delete") //회원 정보 삭제
 	public String deleteStudent(@RequestBody Map<String, String> map, Principal principal) {
@@ -141,6 +154,10 @@ public class StudentContorller {
 				System.out.println("session email : "+ email + " db email : " + student.getEmail());
 				if(email.equals(student.getEmail())){
 					System.out.println("삭제!!!!!!!!!!!!!!");
+					List<Course> courseList = courseService.getCourseList(session_isCheck_userid);
+					for (Course course : courseList) {
+						courseService.deleteCourse(session_isCheck_userid, course.getCourseId());
+					}
 					roleRepository.deleteRole(session_isCheck_userid);
 					
 					studentService.deleteStudent(email);
