@@ -43,7 +43,7 @@
 		</set>
 		WHERE lecture_comment_id=#{lectureCommentId}
 	</update>
-	<delete id="deleteLectureComment" parameterType="int">
+	<delete id="deleteLectureComment">
 		DELETE FROM LECTURECOMMENT 
 		WHERE lecture_comment_id = #{lectureCommentId} and student_id = #{studentId}
 	</delete>

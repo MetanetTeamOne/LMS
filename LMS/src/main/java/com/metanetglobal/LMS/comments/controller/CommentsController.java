@@ -1,5 +1,6 @@
 package com.metanetglobal.LMS.comments.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,31 +31,52 @@ public class CommentsController {
 	}
 	
 	@GetMapping("/lecture/{lectureCommentId}")
-	public List<Comments> getLectureIdComments(@PathVariable int lectureCommentId){
-		System.out.println("lectureCommentId : " + lectureCommentId);
-		return commentsService.getLectureIdComments(lectureCommentId);
+	public List<Comments> getLectureIdComments(@PathVariable int lectureCommentId, Principal principal){
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			System.out.println("lectureCommentId : " + lectureCommentId);
+			return commentsService.getLectureIdComments(lectureCommentId);
+		}
+		return null;
 	}
 	
 	@GetMapping("/commet/{commentsId}")
-	public Comments getComments(@PathVariable int commentsId){
-		return commentsService.getComments(commentsId);
+	public Comments getComments(@PathVariable int commentsId, Principal principal){
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			return commentsService.getComments(commentsId);
+		}
+		return null;
 	}
 	
 	@PostMapping("/insert")
-	public String insertComments(@RequestBody Comments comments) {
-		commentsService.insertComments(comments);
-		return "ok";
+	public String insertComments(@RequestBody Comments comments, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			commentsService.insertComments(comments);
+			return "ok";
+		}
+	
+		return "fail";
 	}
 	
 	@PatchMapping("/update")
-	public String updateComments(@RequestBody Comments comments) {
-		commentsService.updateComments(comments);
-		return "ok";
+	public String updateComments(@RequestBody Comments comments, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			commentsService.updateComments(comments);
+			return "ok";
+		}
+		return "fail";
 	}
 	
 	@DeleteMapping("/delete/{commentsId}/{studentId}")
-	public String deleteComments(@PathVariable int commentsId, @PathVariable int studentId) {
-		commentsService.deleteComments(commentsId, studentId);
-		return "ok";
+	public String deleteComments(@PathVariable int commentsId, @PathVariable String studentId, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			commentsService.deleteComments(commentsId, studentId);
+			return "ok";
+		}
+		return "fail";
 	}
 }

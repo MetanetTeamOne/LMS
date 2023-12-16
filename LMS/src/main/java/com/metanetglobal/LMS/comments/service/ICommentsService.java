@@ -9,5 +9,5 @@ public interface ICommentsService {
 	Comments getComments(int commentsId);
 	void insertComments(Comments comments);
 	void updateComments(Comments comments);
-	void deleteComments(int commentsId, int studentId);
+	void deleteComments(int commentsId, String studentId);
 }

@@ -1,5 +1,6 @@
 package com.metanetglobal.LMS.lecturecomment.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,37 +25,60 @@ public class LectureCommentController {
 	ILectureCommentService lectureCommentService;
 	
 	@GetMapping("/")
-	public List<LectureComment> getLectureComment(){
-		return lectureCommentService.getLectureComment();
+	public List<LectureComment> getLectureComment(Principal principal){
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			return lectureCommentService.getLectureComment();
+		}
+		return null;
 	}
 	
 	@GetMapping("/{lectureId}")
-	public List<LectureComment> getLectureComment(@PathVariable int lectureId) {
-		return lectureCommentService.getLectureComment(lectureId);
+	public List<LectureComment> getLectureComment(@PathVariable int lectureId, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			return lectureCommentService.getLectureComment(lectureId);
+		}
+		return null;
 	}
 	
 	@GetMapping("/lecture/{lectureCommentId}")
-	public LectureComment getLectureCommentIdLectureComment(@PathVariable int lectureCommentId) {
-		return lectureCommentService.getLectureCommentIdLectureComment(lectureCommentId);
-		
+	public LectureComment getLectureCommentIdLectureComment(@PathVariable int lectureCommentId, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			return lectureCommentService.getLectureCommentIdLectureComment(lectureCommentId);
+		}
+		return null;
 	}
 
 	@PostMapping("/insert")
-	public String insertLectureComment(@RequestBody LectureComment lectureComment) {
-		lectureCommentService.insertLectureComment(lectureComment);
-		return "ok";
+	public String insertLectureComment(@RequestBody LectureComment lectureComment, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			lectureCommentService.insertLectureComment(lectureComment);
+			return "ok";
+		}
+		return "fail";
 	}
 	
 	@PatchMapping("/update")
-	public String updateLectureComment(@RequestBody LectureComment lectureComment) {
-		lectureCommentService.updateLectureComment(lectureComment);
-		return "ok";
+	public String updateLectureComment(@RequestBody LectureComment lectureComment, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			lectureCommentService.updateLectureComment(lectureComment);
+			return "ok";
+		}
+		return "fail";
 	}
 	
 	@DeleteMapping("/delete/{lectureCommentId}/{studentId}")
-	public String deleteLectureComment(@PathVariable int lectureCommentId, @PathVariable int studentId) {
-		lectureCommentService.deleteLectureComment(lectureCommentId, studentId);
-		return "ok";
+	public String deleteLectureComment(@PathVariable int lectureCommentId, @PathVariable String studentId, Principal principal) {
+		String session_isCheck_userid = principal.getName();
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			lectureCommentService.deleteLectureComment(lectureCommentId, studentId);
+			return "ok";
+		}
+		return "fail";
 	}
 
 }

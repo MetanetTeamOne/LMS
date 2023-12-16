@@ -1,5 +1,6 @@
 package com.metanetglobal.LMS.course.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,21 +29,28 @@ public class CourseController {
 	} 
 	
 	@GetMapping("/{studentId}")
-	public List<Course> getCourseList(@PathVariable String studentId){
-		System.out.println(studentId);
+	public List<Course> getCourseList(@PathVariable String studentId, Principal principal){
 		
-		List<Course> courseList = courseService.getCourseList(studentId);
-//		System.out.println("getCourseList==========studentId=========");
-//		System.out.println("courseList>>"+courseList);
-//		System.out.println("studentId>>"+studentId);
-		return courseList;
+		System.out.println(studentId);
+		String session_isCheck_userid = principal.getName();		
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			List<Course> courseList = courseService.getCourseList(studentId);
+//			System.out.println("getCourseList==========studentId=========");
+//			System.out.println("courseList>>"+courseList);
+//			System.out.println("studentId>>"+studentId);
+			return courseList;
+		}
+		return null;
 	} 
 	
 	@PostMapping("/insert")
-	public void insertCourse(@RequestBody Course course) {
+	public void insertCourse(@RequestBody Course course, Principal principal) {
 		//System.out.println("=======insert controller=======");
 		System.out.println("course>>>"+course);
-		courseService.insertCourse(course);
+		String session_isCheck_userid = principal.getName();		
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			courseService.insertCourse(course);
+		}
 	}
 	
 //	@DeleteMapping("/delete")
@@ -53,10 +61,12 @@ public class CourseController {
 
 	
 	@DeleteMapping("/delete/{studentId}/{courseId}")
-	public int deleteCourse(@PathVariable String studentId, @PathVariable int courseId) {
+	public int deleteCourse(@PathVariable String studentId, @PathVariable int courseId, Principal principal) {
 		System.out.println("=======delete controller=======");
-		return courseService.deleteCourse(studentId, courseId);
+		String session_isCheck_userid = principal.getName();		
+		if(session_isCheck_userid != null && !session_isCheck_userid.equals("")) {
+			return courseService.deleteCourse(studentId, courseId);
+		}
+		return -1;
 	}
-
-	
 }

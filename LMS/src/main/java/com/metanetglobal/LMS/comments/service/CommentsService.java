@@ -35,7 +35,7 @@ public class CommentsService implements ICommentsService {
 	}
 
 	@Override
-	public void deleteComments(int commentsId, int studentId) {
+	public void deleteComments(int commentsId, String studentId) {
 		commentsRepository.deleteComments(commentsId, studentId);
 	}
 	
